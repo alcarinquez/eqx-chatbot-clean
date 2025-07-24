@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './Chat.css';
 
 const Chat = () => {
@@ -6,45 +6,36 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const TypewriterText = ({ text, speed = 30 }) => {
-    const [displayedText, setDisplayedText] = useState('');
-    const [isTyping, setIsTyping] = useState(true);
+  const animateSystemResponse = (fullText) => {
+    let index = 0;
 
-    useEffect(() => {
-      if (!text) return;
-      
-      // Reset state when text changes
-      setDisplayedText('');
-      setIsTyping(true);
-      
-      let index = 0;
-      
-      const timer = setInterval(() => {
-        if (index < text.length) {
-          setDisplayedText(text.slice(0, index + 1));
-          index++;
-        } else {
-          setIsTyping(false);
-          clearInterval(timer);
-        }
-      }, speed);
+    const interval = setInterval(() => {
+      setMessages((prev) => {
+        const lastMessage = prev[prev.length - 1];
+        if (lastMessage.type !== 'bot') return prev;
 
-      return () => clearInterval(timer);
-    }, [text, speed]);
+        const updatedLastMessage = {
+          ...lastMessage,
+          text: fullText.slice(0, index + 1),
+        };
 
-    return (
-      <span>
-        {displayedText}
-        {isTyping && <span className="cursor">|</span>}
-      </span>
-    );
+        return [...prev.slice(0, -1), updatedLastMessage];
+      });
+
+      index++;
+
+      if (index >= fullText.length) {
+        clearInterval(interval);
+      }
+    }, 30);
   };
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
 
-    const userMessage = { type: 'user', text: userInput };
-    setMessages(prev => [...prev, userMessage]);
+    const userMessage = { type: 'user', text: userInput, id: Date.now() };
+    const loadingMessage = { type: 'bot', text: 'Thinking...', id: Date.now() + 1 };
+    setMessages(prev => [...prev, userMessage, loadingMessage]);
     setIsLoading(true);
     
     const currentInput = userInput;
@@ -110,8 +101,8 @@ const Chat = () => {
       // Ensure responseData is a valid string
       const finalResponseData = typeof responseData === 'string' ? responseData : String(responseData || 'No response received');
       
-      const botMessage = { type: 'bot', text: finalResponseData };
-      setMessages(prev => [...prev, botMessage]);
+      // Use the animation function instead of adding a new message
+      animateSystemResponse(finalResponseData);
       
     } catch (error) {
       console.error('API Error Details:', error);
@@ -123,11 +114,8 @@ const Chat = () => {
         errorMessage = `Server error: ${error.message}`;
       }
       
-      const botErrorMessage = { 
-        type: 'bot', 
-        text: errorMessage
-      };
-      setMessages(prev => [...prev, botErrorMessage]);
+      // Use the animation function for error messages too
+      animateSystemResponse(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -155,13 +143,9 @@ const Chat = () => {
         )}
         
         {messages.map((message, index) => (
-          <div key={index} className={`message ${message.type}`}>
+          <div key={message.id || index} className={`message ${message.type}`}>
             <div className="message-bubble">
-              {message.type === 'bot' ? (
-                <TypewriterText text={message.text} speed={30} />
-              ) : (
-                message.text
-              )}
+              {message.text}
             </div>
           </div>
         ))}
