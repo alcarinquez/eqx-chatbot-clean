@@ -9,7 +9,15 @@
   padding: 40px;
   box-sizing: border-box;
   background: linear-gradient(135deg, #04ef99 0%, #049cfc 100%);
+  background-size: 200% 200%;
   position: relative;
+  animation: gradientMove 15s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* Header Styles */
@@ -72,38 +80,40 @@
 }
 
 .message.user {
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .message.bot {
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .message-bubble {
-  max-width: 100%;
+  max-width: 80%;
   padding: 20px 30px;
-  border-radius: 25px;
+  border-radius: 30px;
   word-wrap: break-word;
   line-height: 1.6;
   font-size: 1.1rem;
-  text-align: center;
+  text-align: left;
 }
 
 .message.user .message-bubble {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  border: 2px solid rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
   font-weight: 500;
+  border-bottom-right-radius: 15px;
 }
 
 .message.bot .message-bubble {
   background: rgba(255, 255, 255, 0.95);
   color: #333;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
+  border-bottom-left-radius: 15px;
 }
 
 /* Typewriter Cursor */
@@ -126,6 +136,8 @@
   justify-content: center;
   min-height: 40px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-bottom-left-radius: 15px;
 }
 
 .typing-indicator {
@@ -220,6 +232,8 @@
   border: none;
   border-radius: 50%;
   background: linear-gradient(135deg, #04ef99 0%, #049cfc 100%);
+  background-size: 200% 200%;
+  animation: gradientMove 15s ease infinite;
   color: white;
   cursor: pointer;
   display: flex;
@@ -234,6 +248,8 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(4, 156, 252, 0.4);
   background: linear-gradient(135deg, #05ff9f 0%, #0595ff 100%);
+  background-size: 200% 200%;
+  animation: gradientMove 10s ease infinite;
 }
 
 .send-button:active {
