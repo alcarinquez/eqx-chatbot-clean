@@ -6,7 +6,7 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const TypewriterText = ({ text, speed = 50 }) => {
+  const TypewriterText = ({ text, speed = 30 }) => {
     const [displayedText, setDisplayedText] = useState('');
     const [isTyping, setIsTyping] = useState(true);
 
@@ -17,13 +17,11 @@ const Chat = () => {
       setDisplayedText('');
       setIsTyping(true);
       
-      // Convert text to array once to avoid any potential issues
-      const characters = Array.from(text);
       let index = 0;
       
       const timer = setInterval(() => {
-        if (index < characters.length) {
-          setDisplayedText(prev => prev + characters[index]);
+        if (index < text.length) {
+          setDisplayedText(text.slice(0, index + 1));
           index++;
         } else {
           setIsTyping(false);
@@ -109,7 +107,10 @@ const Chat = () => {
       
       console.log('Processed Response Data:', responseData);
       
-      const botMessage = { type: 'bot', text: responseData || 'No response received' };
+      // Ensure responseData is a valid string
+      const finalResponseData = typeof responseData === 'string' ? responseData : String(responseData || 'No response received');
+      
+      const botMessage = { type: 'bot', text: finalResponseData };
       setMessages(prev => [...prev, botMessage]);
       
     } catch (error) {
