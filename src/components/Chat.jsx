@@ -136,43 +136,44 @@ const Chat = () => {
 
   return (
     <div className="chat-container">
-      <div className="chat-header">
-        <img src="/assets/images/logo.png" alt="EQx Logo" className="logo" />
-        <h1>EQx AI Assistant</h1>
+      {/* Title - positioned based on whether there are messages */}
+      <div className={`chat-title ${messages.length > 0 ? 'has-messages' : 'no-messages'}`}>
+        <h1>
+          Elite Quality Index Chatbot
+          <span className="beta-label">BETA</span>
+        </h1>
       </div>
       
-      <div className="chat-messages">
-        {messages.length === 0 && (
-          <div className="welcome-message">
-            <p>Welcome! Ask me anything about Elite Quality Index.</p>
-          </div>
-        )}
-        
-        {messages.map((message, index) => (
-          <div key={message.id || index} className={`message ${message.type}`}>
-            <div className="message-bubble">
-              {message.text}
-            </div>
-          </div>
-        ))}
-        
-        {isLoading && (
-          <div className="message bot">
-            <div className="message-bubble loading">
-              <div className="typing-indicator">
-                <span></span>
-                <span></span>
-                <span></span>
+      {/* Messages area - only visible when there are messages */}
+      {messages.length > 0 && (
+        <div className="chat-messages">
+          {messages.map((message, index) => (
+            <div key={message.id || index} className={`message ${message.type}`}>
+              <div className="message-bubble">
+                {message.text}
               </div>
             </div>
-          </div>
-        )}
-        
-        {/* Invisible element to scroll to */}
-        <div ref={messagesEndRef} />
-      </div>
+          ))}
+          
+          {isLoading && (
+            <div className="message bot">
+              <div className="message-bubble loading">
+                <div className="typing-indicator">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          )}
+          
+          {/* Invisible element to scroll to */}
+          <div ref={messagesEndRef} />
+        </div>
+      )}
 
-      <div className="chat-input">
+      {/* Input area - positioned based on whether there are messages */}
+      <div className={`chat-input ${messages.length > 0 ? 'has-messages' : 'no-messages'}`}>
         <div className="input-container">
           <textarea
             value={userInput}
@@ -193,6 +194,26 @@ const Chat = () => {
             </svg>
           </button>
         </div>
+      </div>
+
+      {/* Learn more link - only visible when no messages */}
+      <div className={`learn-more-link ${messages.length === 0 ? 'no-messages' : ''}`}>
+        <a href="https://elitequality.org/" target="_blank" rel="noopener noreferrer">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            style={{ verticalAlign: 'middle', marginRight: '0.5em' }}
+            aria-hidden="true"
+          >
+            <path d="M14 3h7v7" stroke="#049cfc" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M10 14L21 3" stroke="#049cfc" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+            <rect x="3" y="7" width="14" height="14" rx="2.5" stroke="#049cfc" strokeWidth="1.7"/>
+          </svg>
+          Learn more at elitequality.org
+        </a>
       </div>
     </div>
   );
