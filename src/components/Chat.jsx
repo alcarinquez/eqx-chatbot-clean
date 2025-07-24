@@ -13,13 +13,17 @@ const Chat = () => {
     useEffect(() => {
       if (!text) return;
       
+      // Reset state when text changes
       setDisplayedText('');
       setIsTyping(true);
       
+      // Convert text to array once to avoid any potential issues
+      const characters = Array.from(text);
       let index = 0;
+      
       const timer = setInterval(() => {
-        if (index < text.length) {
-          setDisplayedText(prev => prev + text[index]);
+        if (index < characters.length) {
+          setDisplayedText(prev => prev + characters[index]);
           index++;
         } else {
           setIsTyping(false);
