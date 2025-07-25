@@ -139,7 +139,8 @@ const Chat = () => {
       {/* Title - positioned based on whether there are messages */}
       <div className={`chat-title ${messages.length > 0 ? 'has-messages' : 'no-messages'}`}>
         <h1>
-          Elite Quality Index Chatbot
+          The Elite Quality Index<sup>®</sup><br />
+          Chatbot
           <span className="beta-label">BETA</span>
         </h1>
       </div>
@@ -201,8 +202,8 @@ const Chat = () => {
         <a href="https://elitequality.org/" target="_blank" rel="noopener noreferrer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             style={{ verticalAlign: 'middle', marginRight: '0.5em' }}

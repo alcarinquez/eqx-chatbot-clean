@@ -12,7 +12,6 @@
   overflow: hidden;
 }
 
-/* Title Styles */
 .chat-title {
   display: flex;
   align-items: center;
@@ -23,7 +22,7 @@
 
 .chat-title.no-messages {
   position: absolute;
-  top: 45%;
+  top: 36%; /* Moved up by 20px (from 38% to 18%) */
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -31,7 +30,7 @@
 .chat-title.has-messages {
   position: fixed;
   top: 30px;
-  left: 50%;
+  color: #049cfc; /* Change color to blue on hover */
   transform: translateX(-50%);
   padding: 20px 0;
 }
@@ -39,7 +38,7 @@
 .chat-title h1 {
   font-family: 'IBM Plex Mono', monospace;
   font-weight: 700;
-  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-size: clamp(1.75rem, 5vw, 3.25rem); /* Reduced by ~4pt from 2.25rem to 1.75rem */
   margin: 0;
   background: linear-gradient(135deg, #04ef99 0%, #049cfc 100%);
   background-clip: text;
@@ -219,10 +218,9 @@
   border-top: 1px solid #f0f0f0;
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 .chat-input.no-messages {
   position: absolute;
-  top: 55%;
+  top: 46%;
   left: 50%;
   transform: translateX(-50%);
   border: none;
@@ -271,13 +269,21 @@
   opacity: 1;
 }
 
-.learn-more-link a {
+.learn-more-link {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.9rem;
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.learn-more-link a {
   color: #666;
   text-decoration: none;
   transition: color 0.3s ease;
-  position: relative;
+  font-size: 0.875rem; /* Make font smaller by ~2pt */
 }
 
 .learn-more-link a:hover {
