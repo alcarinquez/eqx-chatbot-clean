@@ -52,8 +52,13 @@ const Chat = () => {
     try {
       console.log('Making API call with user input:', currentInput);
       
-      // Use the proxy route instead of direct URL (similar to HelpInputBox)
-      const response = await fetch(`/GetChatbotResponse?user_input_question=${encodeURIComponent(currentInput)}`, {
+      // Use environment variable for API base URL
+      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
+      const apiUrl = `${apiBaseUrl}/GetChatbotResponse?user_input_question=${encodeURIComponent(currentInput)}`;
+      
+      console.log('API URL:', apiUrl); // For debugging
+      
+      const response = await fetch(apiUrl, {
         method: 'GET',
         headers: {
           'Accept': 'application/json, text/plain, */*',
