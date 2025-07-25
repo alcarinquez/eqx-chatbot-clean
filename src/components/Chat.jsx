@@ -52,9 +52,11 @@ const Chat = () => {
     try {
       console.log('Making API call with user input:', currentInput);
       
-      // Use environment variable for API base URL
-      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
-      const apiUrl = `${apiBaseUrl}/GetChatbotResponse?user_input_question=${encodeURIComponent(currentInput)}`;
+      // Use Vite proxy for local development, Azure Function for production
+      const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+      const apiUrl = isProduction 
+        ? `/api/proxy?user_input_question=${encodeURIComponent(currentInput)}`
+        : `/GetChatbotResponse?user_input_question=${encodeURIComponent(currentInput)}`;
       
       console.log('API URL:', apiUrl); // For debugging
       
