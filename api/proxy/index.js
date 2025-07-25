@@ -24,13 +24,33 @@ module.exports = async function (context, req) {
         
         context.log(`Making request to: ${apiUrl}`);
         
-        const response = await fetch(apiUrl, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json',
-            },
-        });
+        // Try using built-in fetch first, fallback to node-fetch if needed
+        let response;
+        try {
+            // Check if fetch is available (Node 18+)
+            if (typeof fetch !== 'undefined') {
+                response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json',
+                    },
+                });
+            } else {
+                // Fallback to node-fetch for older runtimes
+                const fetch = require('node-fetch');
+                response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json',
+                    },
+                });
+            }
+        } catch (fetchError) {
+            context.log.error('Fetch error:', fetchError);
+            throw new Error(`Failed to make request: ${fetchError.message}`);
+        }
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
@@ -87,11 +107,15 @@ module.exports = async function (context, req) {
         };
 
     } catch (error) {
-        context.log.error('API Error:', error);
+        context.log.error('API Error Details:', {
+            message: error.message,
+            stack: error.stack,
+            name: error.name
+        });
         
-        let errorMessage = 'Something went wrong. Please try again later.';
-        if (error.message.includes('Failed to fetch')) {
-            errorMessage = 'Network error. Could not reach the API server.';
+        let errorMessage = `Error: ${error.message}`;
+        if (error.message.includes('Failed to fetch') || error.message.includes('Failed to make request')) {
+            errorMessage = `Network error: ${error.message}`;
         } else if (error.message.includes('HTTP error')) {
             errorMessage = `Server error: ${error.message}`;
         }
@@ -102,7 +126,10 @@ module.exports = async function (context, req) {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
             },
-            body: JSON.stringify({ error: errorMessage })
+            body: JSON.stringify({ 
+                error: errorMessage,
+                details: error.message // Include more details for debugging
+            })
         };
     }
 };
