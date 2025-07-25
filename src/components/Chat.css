@@ -96,25 +96,14 @@
   padding: 120px 20px 110px;
   overflow-y: auto;
   scroll-behavior: smooth;
+  /* Hide scrollbar completely */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
-/* Custom scrollbar styling */
+/* Hide scrollbar for WebKit browsers (Chrome, Safari, Opera) */
 .chat-messages::-webkit-scrollbar {
-  width: 6px;
-}
-
-.chat-messages::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.chat-messages::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
-  transition: background 0.3s ease;
-}
-
-.chat-messages::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.2);
+  display: none;
 }
 
 /* Message Styles */
