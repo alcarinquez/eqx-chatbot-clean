@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import './Chat.css';
 
+// Logo image import (public folder, so use relative path in <img>)
+
 const Chat = () => {
   const [userInput, setUserInput] = useState('');
   const [messages, setMessages] = useState([]);
@@ -136,6 +138,8 @@ const Chat = () => {
 
   return (
     <div className="chat-container">
+      {/* Logo at top left */}
+      <img src="/assets/images/logo.png" alt="Logo" className="chat-logo" />
       {/* Title - positioned based on whether there are messages */}
       <div className={`chat-title ${messages.length > 0 ? 'has-messages' : 'no-messages'}`}>
         <h1>
