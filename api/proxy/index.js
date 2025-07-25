@@ -1,10 +1,13 @@
 module.exports = async function (context, req) {
     context.log('HTTP trigger function processed a request.');
+    context.log('Request method:', req.method);
+    context.log('Request query:', req.query);
 
     // Get the query parameter from the request
     const userInputQuestion = req.query.user_input_question;
 
     if (!userInputQuestion) {
+        context.log('Missing user_input_question parameter');
         context.res = {
             status: 400,
             headers: {
