@@ -7,12 +7,61 @@ const Chat = () => {
   const [userInput, setUserInput] = useState('');
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [userHasScrolled, setUserHasScrolled] = useState(false);
   const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
 
-  // Auto-scroll to bottom when messages change
+  // Auto-scroll to bottom when messages change, but only if user hasn't scrolled
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    if (!userHasScrolled && isLoading) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages, userHasScrolled, isLoading]);
+
+  // Handle scroll events to detect user scrolling
+  useEffect(() => {
+    const messagesContainer = messagesContainerRef.current;
+    if (!messagesContainer) return;
+
+    let isUserScrolling = false;
+
+    const handleScroll = () => {
+      if (isUserScrolling) return; // Ignore programmatic scrolls
+      
+      const { scrollTop, scrollHeight, clientHeight } = messagesContainer;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10; // 10px threshold
+      
+      // If user scrolls up from bottom during any time, disable auto-scroll
+      if (!isAtBottom) {
+        setUserHasScrolled(true);
+      }
+    };
+
+    // Track when we're programmatically scrolling
+    const originalScrollIntoView = messagesEndRef.current?.scrollIntoView;
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView = function(...args) {
+        isUserScrolling = true;
+        originalScrollIntoView?.apply(this, args);
+        setTimeout(() => { isUserScrolling = false; }, 100);
+      };
+    }
+
+    messagesContainer.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      messagesContainer.removeEventListener('scroll', handleScroll);
+      if (messagesEndRef.current && originalScrollIntoView) {
+        messagesEndRef.current.scrollIntoView = originalScrollIntoView;
+      }
+    };
+  }, [userHasScrolled]);
+
+  // Reset scroll behavior when starting a new query
+  useEffect(() => {
+    if (isLoading) {
+      setUserHasScrolled(false);
+    }
+  }, [isLoading]);
 
   const animateSystemResponse = (fullText) => {
     let index = 0;
@@ -158,7 +207,7 @@ const Chat = () => {
       
       {/* Messages area - only visible when there are messages */}
       {messages.length > 0 && (
-        <div className="chat-messages">
+        <div className="chat-messages" ref={messagesContainerRef}>
           {messages.map((message, index) => (
             <div key={message.id || index} className={`message ${message.type}`}>
               <div className="message-bubble">
