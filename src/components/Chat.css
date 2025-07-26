@@ -1,5 +1,5 @@
-/* Import IBM Plex Mono font */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+/* Import Fira Code font */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap');
 
 /* Chat Container Styles */
 .chat-container {
@@ -42,7 +42,7 @@
 }
 
 .chat-title h1 {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Fira Code', monospace;
   font-weight: 700;
   font-size: clamp(1.75rem, 5vw, 3.25rem); /* Reduced by ~4pt from 2.25rem to 1.75rem */
   margin: 0;
@@ -64,7 +64,7 @@
 }
 
 .beta-label {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Fira Code', monospace;
   font-weight: 400;
   font-size: 0.3em;
   color: #666;
@@ -276,7 +276,7 @@
 }
 
 .learn-more-link {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Fira Code', monospace;
   position: absolute;
   top: 65%;
   left: 50%;
