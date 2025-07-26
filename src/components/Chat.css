@@ -79,7 +79,7 @@
   -webkit-text-fill-color: transparent;
   background-size: 200% 200%;
   animation: gradientMove 8s ease infinite;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.00em;
   text-align: left;
   line-height: 1.1;
   position: relative;
