@@ -196,6 +196,15 @@ const Chat = () => {
     <div className="chat-container">
       {/* Logo at top left */}
       <img src="/assets/images/logo.png" alt="Logo" className="chat-logo" />
+      
+      {/* About EQx textbox - positioned under the logo */}
+      <div className="about-eqx-container">
+        <h3 className="about-eqx-title">About EQx</h3>
+        <div className="about-eqx-content">
+          The Elite Quality Index (EQx) is a political economy index that measures and ranks countries on the basis of their elite quality. Elite quality is understood as the aggregate impact of elite business models as they lead to value creation (positive) or rent seeking (negative). High quality elites maximize a country’s inclusive economic and human development in the long run.
+        </div>
+      </div>
+      
       {/* Title - positioned based on whether there are messages */}
       <div className={`chat-title ${messages.length > 0 ? 'has-messages' : 'no-messages'}`}>
         <h1>

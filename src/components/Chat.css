@@ -1,5 +1,5 @@
 /* Import Fira Sans font */
-@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@200;400;500;600;700&display=swap');
 
 /* Chat Container Styles */
 .chat-container {
@@ -20,6 +20,33 @@
   width: 120px;
   height: auto;
   z-index: 100;
+}
+
+/* About EQx textbox under logo */
+.about-eqx-container {
+  position: absolute;
+  top: 100px; /* Position under the logo */
+  left: 28px;
+  width: 200px;
+  z-index: 99;
+  padding: 0;
+}
+
+.about-eqx-title {
+  font-family: 'Fira Sans', monospace;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  margin: 0 0 8px 0;
+}
+
+.about-eqx-content {
+  font-family: 'Fira Sans', monospace;
+  font-weight: 200;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: #999;
+  margin: 0;
 }
 
 .chat-title {
@@ -380,6 +407,11 @@
   
   .chat-title.has-messages h1 {
     font-size: clamp(1.25rem, 4vw, 1.5rem);
+  }
+  
+  .about-eqx-container {
+    width: calc(100vw - 56px); /* Full width minus left/right margins */
+    max-width: 200px;
   }
   
   .chat-messages {
