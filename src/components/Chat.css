@@ -1,5 +1,5 @@
-/* Import Fira Code font */
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap');
+/* Import Fira Sans font */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap');
 
 /* Chat Container Styles */
 .chat-container {
@@ -42,7 +42,7 @@
 }
 
 .chat-title h1 {
-  font-family: 'Fira Code', monospace;
+  font-family: 'Fira Sans', monospace;
   font-weight: 700;
   font-size: clamp(1.75rem, 5vw, 3.25rem); /* Reduced by ~4pt from 2.25rem to 1.75rem */
   margin: 0;
@@ -52,7 +52,7 @@
   -webkit-text-fill-color: transparent;
   background-size: 200% 200%;
   animation: gradientMove 8s ease infinite;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
   text-align: left;
   line-height: 1.1;
   position: relative;
@@ -64,7 +64,7 @@
 }
 
 .beta-label {
-  font-family: 'Fira Code', monospace;
+  font-family: 'Fira Sans', monospace;
   font-weight: 400;
   font-size: 0.3em;
   color: #666;
@@ -265,7 +265,7 @@
 }
 
 .learn-more-link {
-  font-family: 'Fira Code', monospace;
+  font-family: 'Fira Sans', monospace;
   position: absolute;
   top: 65%;
   left: 50%;
